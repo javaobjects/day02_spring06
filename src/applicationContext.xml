@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+
+	<bean id="userDao" class="spring.UserDaoImpl"></bean>
+	
+	<!-- 
+		依赖注入三种方式：
+		
+			1. 构造函数注入：所需信息通过构造函数参数注入
+			2. 属性注入（setter注入）：所需信息通过属性的set方法注入
+			3. 接口注入（接口注入侵入性太强，spring不提供）：实现接口，所需信息通过接口定义的方法注入。如EJB方式。
+				
+			java注入参数的方式有哪些？	  ->   构造函数注入、属性注入、接口注入
+			spring注入参数的方式有哪些？    ->   构造函数注入、属性注入
+	 -->
+	 <!-- 
+	 		1. 构造函数注入：<constructor-arg>
+	 			
+	 			index:可省略，构造函数参数的下标，从0开始 
+	 			name: 可省略，构造函数参数的名称，例如 public UserService(IUserDao userDao)的参数名称userDao
+	 			ref:  表示在容器中需要引用的bean的id属性值
+	 			value:给基本数据类型或String类型赋值
+	 			
+	 			注意：
+	 				1.参数个数必须一致
+	 				2.参数类型必须一致
+	 				3.建议保留默认无参构造函数
+	 		
+	 			UserService userService = new UserService(userDao,"张三");
+	  -->
+	<bean id="userService" class="spring.UserService">
+		<constructor-arg name="userDao" ref="userDao"></constructor-arg>
+		<constructor-arg name="username" value="张三"></constructor-arg>
+	</bean>
+	
+	<bean id="userService2" class="spring.UserService"></bean>	
+	
+	<!-- 
+		2. 属性注入（setter注入）:<property>
+				name: 可省略，必须为set方法后面的属性名称，例如setUserDao，name值为set后的UserDao首字母小写，即userDao
+	 			ref:  表示在容器中需要引用的bean的id属性值
+	 			value:给基本数据类型或String类型赋值
+				
+				注意：
+					1.name属性值必须为set方法后面的属性名称，例如setUserDao，name值为set后的UserDao首字母小写，即userDao
+				
+				UserService_2 userService3 = new UserService_2();
+				userService3.setUserDao(userDao);  
+				userService3.setUsername("张三");
+	-->
+	<bean id="userService3" class="spring.UserService_2">
+		<property name="userDao" ref="userDao"></property><!-- 相当于userService3.setUserDao(userDao); -->
+		<property name="username" value="张三"></property> <!-- 相当于userService3.setUsername("张三"); -->
+	</bean>
+	
+	
+</beans>
