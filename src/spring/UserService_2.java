@@ -1,6 +1,15 @@
 package spring;
+
 /**
- * set属性注入
+ * 
+* <p>Title: UserService_2</p>  
+* <p>
+*	Description: 
+*	set属性注入
+*   
+* </p> 
+* @author xianxian 
+* @date 2019年10月14日
  */
 public class UserService_2 {
 
